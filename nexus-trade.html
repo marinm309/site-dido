@@ -1,0 +1,1685 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NEXUS TRADE — Global Wholesale Distribution</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:ital,wght@0,300;0,400;0,600;0,700;1,300&family=Barlow+Condensed:wght@300;400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --gold: #C9A84C;
+    --gold-light: #E8C97A;
+    --gold-dim: #7a6030;
+    --navy: #050D1A;
+    --navy-mid: #0A1628;
+    --navy-light: #0F2040;
+    --cyan: #00D4FF;
+    --cyan-dim: #007a99;
+    --white: #F0F4FF;
+    --muted: #8A9BBF;
+    --border: rgba(201,168,76,0.2);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--navy);
+    color: var(--white);
+    font-family: 'Barlow', sans-serif;
+    font-weight: 300;
+    overflow-x: hidden;
+    /* cursor: none; */
+  }
+
+  /* CURSOR */
+  /* .cursor {
+    position: fixed;
+    width: 10px; height: 10px;
+    background: var(--gold);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9999;
+    transform: translate(-50%,-50%);
+    transition: transform 0.1s ease;
+  } */
+  /* .cursor-ring {
+    position: fixed;
+    width: 36px; height: 36px;
+    border: 1px solid rgba(201,168,76,0.5);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9998;
+    transform: translate(-50%,-50%);
+    transition: transform 0.15s ease, width 0.2s, height 0.2s, border-color 0.2s;
+  } */
+  /* body:has(a:hover) .cursor-ring,
+  body:has(button:hover) .cursor-ring {
+    width: 52px; height: 52px;
+    border-color: var(--gold);
+  } */
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 1000;
+    padding: 24px 60px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: linear-gradient(to bottom, rgba(5,13,26,0.95), transparent);
+    backdrop-filter: blur(2px);
+  }
+
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    text-decoration: none;
+  }
+
+  .logo-icon {
+    width: 44px; height: 44px;
+    border: 1px solid var(--gold);
+    display: flex; align-items: center; justify-content: center;
+    position: relative;
+    transform: rotate(45deg);
+  }
+
+  .logo-icon::before {
+    content: '';
+    position: absolute;
+    width: 20px; height: 20px;
+    border: 1px solid var(--gold-light);
+    transform: rotate(0deg);
+  }
+
+  .logo-text {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 22px;
+    letter-spacing: 4px;
+    color: var(--white);
+  }
+
+  .logo-sub {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 10px;
+    letter-spacing: 3px;
+    color: var(--gold);
+    display: block;
+    margin-top: -4px;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 48px;
+    list-style: none;
+  }
+
+  .nav-links a {
+    text-decoration: none;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 13px;
+    letter-spacing: 2.5px;
+    color: var(--muted);
+    transition: color 0.3s;
+    text-transform: uppercase;
+  }
+
+  .nav-links a:hover { color: var(--gold); }
+
+  .nav-cta {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 12px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    padding: 12px 28px;
+    border: 1px solid var(--gold);
+    color: var(--gold);
+    text-decoration: none;
+    transition: all 0.3s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .nav-cta::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--gold);
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
+  }
+
+  .nav-cta:hover::before { transform: translateX(0); }
+  .nav-cta span { position: relative; z-index: 1; }
+  .nav-cta:hover span { color: var(--navy); }
+
+  /* PAGES */
+  .page {
+    min-height: 100vh;
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* ============================
+     PAGE 1 — HERO
+  ============================ */
+  #home {
+    background: var(--navy);
+    display: flex;
+    align-items: center;
+  }
+
+  /* Globe canvas background */
+  .globe-bg {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+  }
+
+  #globe-canvas {
+    position: absolute;
+    right: -5%;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 65vw;
+    height: 65vw;
+    opacity: 0.85;
+  }
+
+  /* Grid overlay */
+  .grid-overlay {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(0,212,255,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,212,255,0.03) 1px, transparent 1px);
+    background-size: 60px 60px;
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 10;
+    padding: 0 60px;
+    max-width: 700px;
+    animation: heroReveal 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+
+  @keyframes heroReveal {
+    from { opacity: 0; transform: translateY(40px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .hero-tag {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 11px;
+    letter-spacing: 5px;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 28px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .hero-tag::before {
+    content: '';
+    display: block;
+    width: 40px;
+    height: 1px;
+    background: var(--gold);
+  }
+
+  .hero-headline {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(72px, 9vw, 130px);
+    line-height: 0.92;
+    letter-spacing: 2px;
+    margin-bottom: 32px;
+  }
+
+  .hero-headline .accent { color: var(--gold); }
+  .hero-headline .line-cyan { color: var(--cyan); }
+
+  .hero-sub {
+    font-size: 16px;
+    line-height: 1.8;
+    color: var(--muted);
+    max-width: 480px;
+    margin-bottom: 52px;
+    font-weight: 300;
+  }
+
+  .hero-actions {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+  }
+
+  .btn-primary {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 12px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    padding: 18px 40px;
+    background: var(--gold);
+    color: var(--navy);
+    text-decoration: none;
+    font-weight: 700;
+    transition: all 0.3s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .btn-primary:hover {
+    background: var(--gold-light);
+    transform: translateY(-2px);
+    box-shadow: 0 20px 60px rgba(201,168,76,0.3);
+  }
+
+  .btn-ghost {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 12px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    padding: 18px 40px;
+    border: 1px solid rgba(201,168,76,0.4);
+    color: var(--white);
+    text-decoration: none;
+    transition: all 0.3s;
+  }
+
+  .btn-ghost:hover {
+    border-color: var(--gold);
+    color: var(--gold);
+  }
+
+  /* Stats bar */
+  .stats-bar {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    border-top: 1px solid var(--border);
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    z-index: 10;
+    background: rgba(5,13,26,0.6);
+    backdrop-filter: blur(10px);
+  }
+
+  .stat-item {
+    padding: 28px 40px;
+    border-right: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    transition: background 0.3s;
+  }
+
+  .stat-item:hover { background: rgba(201,168,76,0.05); }
+  .stat-item:last-child { border-right: none; }
+
+  .stat-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 42px;
+    line-height: 1;
+    color: var(--gold);
+  }
+
+  .stat-label {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 11px;
+    letter-spacing: 2px;
+    color: var(--muted);
+    text-transform: uppercase;
+    line-height: 1.5;
+  }
+
+  /* Route lines animated */
+  .route-lines {
+    position: absolute;
+    top: 0; right: 0;
+    width: 65vw;
+    height: 100%;
+    z-index: 5;
+    pointer-events: none;
+  }
+
+  /* ============================
+     PAGE 2 — ABOUT
+  ============================ */
+  #about {
+    background: var(--navy-mid);
+    padding: 140px 0;
+  }
+
+  .section-header {
+    text-align: center;
+    margin-bottom: 100px;
+    padding: 0 60px;
+  }
+
+  .section-tag {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 11px;
+    letter-spacing: 5px;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+  }
+
+  .section-tag::before, .section-tag::after {
+    content: '';
+    display: block;
+    width: 40px;
+    height: 1px;
+    background: var(--gold-dim);
+  }
+
+  .section-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(48px, 6vw, 88px);
+    letter-spacing: 2px;
+    line-height: 0.95;
+    margin-bottom: 24px;
+  }
+
+  .section-title .accent { color: var(--gold); }
+
+  .section-sub {
+    font-size: 16px;
+    color: var(--muted);
+    max-width: 580px;
+    margin: 0 auto;
+    line-height: 1.8;
+  }
+
+  /* About layout */
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 60px;
+  }
+
+  .about-visual {
+    position: relative;
+    padding-right: 80px;
+  }
+
+  .about-img-frame {
+    position: relative;
+    height: 600px;
+    overflow: hidden;
+  }
+
+  .about-img-frame::before {
+    content: '';
+    position: absolute;
+    top: -1px; left: -1px;
+    right: 40%; bottom: 40%;
+    border-top: 2px solid var(--gold);
+    border-left: 2px solid var(--gold);
+    z-index: 2;
+  }
+
+  .about-img-frame::after {
+    content: '';
+    position: absolute;
+    top: 40%; left: 40%;
+    right: -1px; bottom: -1px;
+    border-bottom: 2px solid var(--gold);
+    border-right: 2px solid var(--gold);
+    z-index: 2;
+  }
+
+  .about-canvas {
+    width: 100%;
+    height: 100%;
+    background: var(--navy-light);
+  }
+
+  .about-badge {
+    position: absolute;
+    bottom: 40px;
+    right: 0;
+    background: var(--gold);
+    color: var(--navy);
+    padding: 24px 32px;
+    z-index: 3;
+  }
+
+  .about-badge-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 52px;
+    line-height: 1;
+  }
+
+  .about-badge-text {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+
+  .about-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .about-content .section-tag {
+    justify-content: flex-start;
+  }
+
+  .about-content .section-tag::before { display: none; }
+
+  .about-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(42px, 5vw, 70px);
+    line-height: 0.95;
+    letter-spacing: 2px;
+    margin-bottom: 32px;
+  }
+
+  .about-title .accent { color: var(--gold); }
+
+  .about-text {
+    font-size: 16px;
+    line-height: 1.9;
+    color: var(--muted);
+    margin-bottom: 20px;
+    font-weight: 300;
+  }
+
+  .about-pillars {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2px;
+    margin-top: 48px;
+  }
+
+  .pillar {
+    background: rgba(255,255,255,0.02);
+    border: 1px solid var(--border);
+    padding: 28px;
+    transition: all 0.3s;
+  }
+
+  .pillar:hover {
+    background: rgba(201,168,76,0.05);
+    border-color: var(--gold-dim);
+  }
+
+  .pillar-icon {
+    font-size: 24px;
+    margin-bottom: 12px;
+  }
+
+  .pillar-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 14px;
+    letter-spacing: 2px;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+
+  .pillar-text {
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.6;
+  }
+
+  /* ============================
+     PAGE 3 — SERVICES
+  ============================ */
+  #services {
+    background: var(--navy);
+    padding: 140px 0;
+    position: relative;
+  }
+
+  #services::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: radial-gradient(ellipse at 50% 50%, rgba(201,168,76,0.04) 0%, transparent 70%);
+  }
+
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 60px;
+  }
+
+  .service-card {
+    background: var(--navy-mid);
+    border: 1px solid var(--border);
+    padding: 52px 44px;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    cursor: default;
+  }
+
+  .service-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: var(--gold);
+    transform: scaleX(0);
+    transition: transform 0.4s ease;
+    transform-origin: left;
+  }
+
+  .service-card:hover { transform: translateY(-8px); border-color: var(--gold-dim); }
+  .service-card:hover::before { transform: scaleX(1); }
+
+  .service-number {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 80px;
+    color: rgba(201,168,76,0.08);
+    line-height: 1;
+    position: absolute;
+    top: 20px;
+    right: 32px;
+    transition: color 0.4s;
+  }
+
+  .service-card:hover .service-number { color: rgba(201,168,76,0.15); }
+
+  .service-icon-wrap {
+    width: 56px; height: 56px;
+    border: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 32px;
+    font-size: 24px;
+    transition: border-color 0.3s, background 0.3s;
+  }
+
+  .service-card:hover .service-icon-wrap {
+    border-color: var(--gold);
+    background: rgba(201,168,76,0.08);
+  }
+
+  .service-name {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 32px;
+    letter-spacing: 2px;
+    margin-bottom: 16px;
+    color: var(--white);
+  }
+
+  .service-desc {
+    font-size: 15px;
+    line-height: 1.8;
+    color: var(--muted);
+    font-weight: 300;
+    margin-bottom: 32px;
+  }
+
+  .service-features {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .service-features li {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 13px;
+    letter-spacing: 1.5px;
+    color: var(--muted);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .service-features li::before {
+    content: '';
+    display: block;
+    width: 20px; height: 1px;
+    background: var(--gold-dim);
+    flex-shrink: 0;
+  }
+
+  /* Process strip */
+  .process-strip {
+    max-width: 1400px;
+    margin: 80px auto 0;
+    padding: 0 60px;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    position: relative;
+  }
+
+  .process-strip::before {
+    content: '';
+    position: absolute;
+    top: 28px;
+    left: 80px;
+    right: 80px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold-dim), transparent);
+  }
+
+  .process-step {
+    text-align: center;
+    padding: 0 16px;
+  }
+
+  .process-dot {
+    width: 56px; height: 56px;
+    border: 1px solid var(--gold-dim);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 20px;
+    background: var(--navy-mid);
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 20px;
+    color: var(--gold);
+    transition: all 0.3s;
+  }
+
+  .process-step:hover .process-dot {
+    background: var(--gold);
+    color: var(--navy);
+    border-color: var(--gold);
+  }
+
+  .process-label {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 12px;
+    letter-spacing: 2px;
+    color: var(--muted);
+    text-transform: uppercase;
+    line-height: 1.5;
+  }
+
+  /* ============================
+     PAGE 4 — CONTACT
+  ============================ */
+  #contact {
+    background: var(--navy-mid);
+    padding: 140px 0;
+    position: relative;
+    overflow: hidden;
+  }
+
+  #contact::before {
+    content: '';
+    position: absolute;
+    bottom: -200px; right: -200px;
+    width: 600px; height: 600px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(201,168,76,0.06) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .contact-grid {
+    display: grid;
+    grid-template-columns: 1fr 1.4fr;
+    gap: 100px;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 60px;
+  }
+
+  .contact-info {
+    padding-top: 20px;
+  }
+
+  .contact-info .section-tag {
+    justify-content: flex-start;
+  }
+
+  .contact-info .section-tag::before { display: none; }
+
+  .contact-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(48px, 5vw, 80px);
+    line-height: 0.95;
+    letter-spacing: 2px;
+    margin-bottom: 32px;
+  }
+
+  .contact-title .accent { color: var(--gold); }
+
+  .contact-desc {
+    font-size: 16px;
+    color: var(--muted);
+    line-height: 1.8;
+    margin-bottom: 60px;
+  }
+
+  .contact-detail {
+    display: flex;
+    align-items: flex-start;
+    gap: 24px;
+    margin-bottom: 32px;
+    padding-bottom: 32px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .contact-detail:last-of-type { border-bottom: none; }
+
+  .contact-detail-icon {
+    width: 44px; height: 44px;
+    border: 1px solid var(--gold-dim);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px;
+    flex-shrink: 0;
+    color: var(--gold);
+  }
+
+  .contact-detail-label {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 11px;
+    letter-spacing: 3px;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+
+  .contact-detail-value {
+    font-size: 15px;
+    color: var(--white);
+  }
+
+  /* Form */
+  .contact-form {
+    background: rgba(255,255,255,0.02);
+    border: 1px solid var(--border);
+    padding: 60px;
+  }
+
+  .form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+  }
+
+  .form-group {
+    margin-bottom: 24px;
+  }
+
+  .form-group label {
+    display: block;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 11px;
+    letter-spacing: 3px;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+
+  .form-group input,
+  .form-group select,
+  .form-group textarea {
+    width: 100%;
+    background: rgba(255,255,255,0.03);
+    border: 1px solid var(--border);
+    color: var(--white);
+    font-family: 'Barlow', sans-serif;
+    font-size: 15px;
+    font-weight: 300;
+    padding: 16px 20px;
+    outline: none;
+    transition: border-color 0.3s, background 0.3s;
+    -webkit-appearance: none;
+  }
+
+  .form-group select {
+    cursor: pointer;
+  }
+
+  .form-group select option {
+    background: var(--navy-mid);
+    color: var(--white);
+  }
+
+  .form-group input:focus,
+  .form-group select:focus,
+  .form-group textarea:focus {
+    border-color: var(--gold-dim);
+    background: rgba(201,168,76,0.04);
+  }
+
+  .form-group input::placeholder,
+  .form-group textarea::placeholder {
+    color: var(--muted);
+    font-size: 14px;
+  }
+
+  .form-group textarea {
+    height: 140px;
+    resize: none;
+  }
+
+  .form-submit {
+    width: 100%;
+    padding: 20px;
+    background: var(--gold);
+    border: none;
+    color: var(--navy);
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 13px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s;
+    margin-top: 8px;
+  }
+
+  .form-submit:hover {
+    background: var(--gold-light);
+    transform: translateY(-2px);
+    box-shadow: 0 20px 60px rgba(201,168,76,0.25);
+  }
+
+  .form-note {
+    font-size: 12px;
+    color: var(--muted);
+    text-align: center;
+    margin-top: 20px;
+    font-style: italic;
+  }
+
+  /* SUCCESS */
+  .form-success {
+    display: none;
+    text-align: center;
+    padding: 60px 40px;
+  }
+
+  .form-success.show { display: block; }
+
+  .success-icon {
+    font-size: 48px;
+    margin-bottom: 24px;
+  }
+
+  .success-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 36px;
+    color: var(--gold);
+    letter-spacing: 2px;
+    margin-bottom: 16px;
+  }
+
+  .success-text {
+    color: var(--muted);
+    font-size: 15px;
+    line-height: 1.7;
+  }
+
+  /* FOOTER */
+  footer {
+    background: var(--navy);
+    border-top: 1px solid var(--border);
+    padding: 48px 60px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .footer-copy {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 12px;
+    letter-spacing: 2px;
+    color: var(--muted);
+  }
+
+  .footer-links {
+    display: flex;
+    gap: 40px;
+    list-style: none;
+  }
+
+  .footer-links a {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 11px;
+    letter-spacing: 2px;
+    color: var(--muted);
+    text-decoration: none;
+    text-transform: uppercase;
+    transition: color 0.3s;
+  }
+
+  .footer-links a:hover { color: var(--gold); }
+
+  /* SCROLL INDICATOR */
+  .scroll-indicator {
+    position: absolute;
+    bottom: 120px;
+    left: 60px;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    animation: fadeIn 2s ease 1.5s both;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; } to { opacity: 1; }
+  }
+
+  .scroll-line {
+    width: 1px;
+    height: 60px;
+    background: linear-gradient(to bottom, var(--gold), transparent);
+    animation: scrollPulse 2s ease infinite;
+  }
+
+  @keyframes scrollPulse {
+    0%, 100% { opacity: 0.3; }
+    50% { opacity: 1; }
+  }
+
+  .scroll-text {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 10px;
+    letter-spacing: 3px;
+    color: var(--muted);
+    writing-mode: vertical-lr;
+    text-transform: uppercase;
+  }
+
+  /* TICKER */
+  .ticker {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 36px;
+    background: var(--gold);
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    z-index: 1001;
+  }
+
+  .ticker-inner {
+    display: flex;
+    animation: ticker 28s linear infinite;
+    white-space: nowrap;
+  }
+
+  .ticker-item {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 12px;
+    letter-spacing: 3px;
+    color: var(--navy);
+    text-transform: uppercase;
+    padding: 0 40px;
+    font-weight: 700;
+  }
+
+  .ticker-sep {
+    font-size: 10px;
+    color: rgba(5,13,26,0.4);
+    padding: 0 8px;
+  }
+
+  /* @keyframes ticker {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  } */
+
+  nav { top: 36px; }
+
+  /* Fade in sections */
+  .fade-in {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+
+  .fade-in.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* Scan line effect */
+  @keyframes scanLine {
+    from { top: 0; }
+    to { top: 100%; }
+  }
+
+</style>
+</head>
+<body>
+
+<!-- Custom Cursor -->
+<!-- <div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div> -->
+
+<!-- Ticker -->
+<div class="ticker">
+  <div class="ticker-inner" id="ticker">
+    <span class="ticker-item">Global Wholesale Distribution</span><span class="ticker-sep">◆</span>
+    <span class="ticker-item">10+ Years Market Experience</span><span class="ticker-sep">◆</span>
+    <span class="ticker-item">30+ Countries Served</span><span class="ticker-sep">◆</span>
+    <span class="ticker-item">200+ Global Partners</span><span class="ticker-sep">◆</span>
+    <span class="ticker-item">95% On-Time Delivery Rate</span><span class="ticker-sep">◆</span>
+    <span class="ticker-item">Strategic Procurement Worldwide</span><span class="ticker-sep">◆</span>
+    <span class="ticker-item">Connecting Markets. Moving Value.</span><span class="ticker-sep">◆</span>
+    <!-- repeat for seamless loop -->
+    <!-- <span class="ticker-item">Global Wholesale Distribution</span><span class="ticker-sep">◆</span>
+    <span class="ticker-item">10+ Years Market Experience</span><span class="ticker-sep">◆</span>
+    <span class="ticker-item">30+ Countries Served</span><span class="ticker-sep">◆</span>
+    <span class="ticker-item">200+ Global Partners</span><span class="ticker-sep">◆</span>
+    <span class="ticker-item">95% On-Time Delivery Rate</span><span class="ticker-sep">◆</span>
+    <span class="ticker-item">Strategic Procurement Worldwide</span><span class="ticker-sep">◆</span>
+    <span class="ticker-item">Connecting Markets. Moving Value.</span><span class="ticker-sep">◆</span> -->
+  </div>
+</div>
+
+<!-- NAV -->
+<nav>
+  <a href="#home" class="logo">
+    <div class="logo-icon"></div>
+    <div>
+      <span class="logo-text">NEXUS TRADE</span>
+      <span class="logo-sub">Global Wholesale Group</span>
+    </div>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#home">Home</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <a href="#contact" class="nav-cta"><span>Get In Touch</span></a>
+</nav>
+
+<!-- ========================
+     PAGE 1 — HERO
+======================== -->
+<section class="page" id="home">
+  <div class="globe-bg">
+    <div class="grid-overlay"></div>
+    <canvas id="globe-canvas"></canvas>
+  </div>
+
+  <div class="hero-content">
+    <div class="hero-tag">Connecting Global Markets</div>
+    <h1 class="hero-headline">
+      GLOBAL<br>
+      <span class="accent">WHOLESALE</span><br>
+      <span class="line-cyan">TRADE.</span>
+    </h1>
+    <p class="hero-sub">
+      We buy, sell, and distribute at wholesale level across international markets — 
+      bridging suppliers and buyers on every continent with precision and reliability.
+    </p>
+    <div class="hero-actions">
+      <a href="#services" class="btn-primary">Our Services</a>
+      <a href="#contact" class="btn-ghost">Contact Us →</a>
+    </div>
+  </div>
+
+  <div class="scroll-indicator">
+    <div class="scroll-line"></div>
+    <span class="scroll-text">Scroll</span>
+  </div>
+
+  <div class="stats-bar">
+    <div class="stat-item">
+      <span class="stat-num">10+</span>
+      <span class="stat-label">Years of<br>Experience</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-num">30+</span>
+      <span class="stat-label">Countries<br>Served</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-num">200+</span>
+      <span class="stat-label">Suppliers &<br>Partners</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-num">95%</span>
+      <span class="stat-label">On-Time<br>Delivery</span>
+    </div>
+  </div>
+</section>
+
+<!-- ========================
+     PAGE 2 — ABOUT
+======================== -->
+<section class="page" id="about">
+  <div class="about-grid">
+    <div class="about-visual fade-in">
+      <div class="about-img-frame">
+        <canvas class="about-canvas" id="about-canvas"></canvas>
+      </div>
+      <div class="about-badge">
+        <div class="about-badge-num">10+</div>
+        <div class="about-badge-text">Years in Global<br>Wholesale Trade</div>
+      </div>
+    </div>
+
+    <div class="about-content fade-in">
+      <div class="section-tag">Who We Are</div>
+      <h2 class="about-title">BUILT ON<br><span class="accent">TRUST &</span><br>EXPERTISE.</h2>
+      <p class="about-text">
+        Nexus Trade is an established global wholesale group operating at the intersection of 
+        procurement, supply chain, and international commerce. We work directly with manufacturers, 
+        distributors, and institutional buyers across more than 30 countries.
+      </p>
+      <p class="about-text">
+        Our model is straightforward: we source products at competitive wholesale prices, 
+        negotiate the best terms across global markets, and deliver with speed and reliability. 
+        No middlemen, no delays — just direct, professional trade at scale.
+      </p>
+
+      <div class="about-pillars">
+        <div class="pillar">
+          <div class="pillar-icon">🌐</div>
+          <div class="pillar-title">Global Reach</div>
+          <div class="pillar-text">Active trading relationships spanning Europe, Asia, Americas, and MENA.</div>
+        </div>
+        <div class="pillar">
+          <div class="pillar-icon">⚖️</div>
+          <div class="pillar-title">Compliance First</div>
+          <div class="pillar-text">Full regulatory and customs compliance across all operating jurisdictions.</div>
+        </div>
+        <div class="pillar">
+          <div class="pillar-icon">📦</div>
+          <div class="pillar-title">End-to-End</div>
+          <div class="pillar-text">From procurement to last-mile delivery — we manage the full chain.</div>
+        </div>
+        <div class="pillar">
+          <div class="pillar-icon">🤝</div>
+          <div class="pillar-title">Long-Term Partners</div>
+          <div class="pillar-text">We build lasting relationships, not transactional one-off deals.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========================
+     PAGE 3 — SERVICES
+======================== -->
+<section class="page" id="services" style="min-height: auto; padding: 140px 0 60px;">
+  <div class="section-header fade-in">
+    <div class="section-tag">What We Do</div>
+    <h2 class="section-title">WHOLESALE <span class="accent">SERVICES</span></h2>
+    <p class="section-sub">We operate across three core disciplines — buying, selling, and distribution — to move products efficiently across global markets.</p>
+  </div>
+
+  <div class="services-grid">
+    <div class="service-card fade-in">
+      <div class="service-number">01</div>
+      <div class="service-icon-wrap">🛒</div>
+      <div class="service-name">Strategic Buying</div>
+      <p class="service-desc">We source and procure goods at wholesale volume from manufacturers and producers globally, securing the most competitive terms available in the market.</p>
+      <ul class="service-features">
+        <li>Volume purchasing & bulk procurement</li>
+        <li>Supplier vetting & qualification</li>
+        <li>Price negotiation & contract terms</li>
+        <li>Import documentation management</li>
+        <li>Quality assurance & inspection</li>
+      </ul>
+    </div>
+
+    <div class="service-card fade-in">
+      <div class="service-number">02</div>
+      <div class="service-icon-wrap">📈</div>
+      <div class="service-name">Global Selling</div>
+      <p class="service-desc">We connect wholesale inventory with institutional buyers, retailers, and trading companies worldwide — maximising value across international markets.</p>
+      <ul class="service-features">
+        <li>B2B wholesale to global buyers</li>
+        <li>Market pricing & margin strategy</li>
+        <li>Multi-currency trade finance</li>
+        <li>Export compliance & documentation</li>
+        <li>Custom packaging & labelling</li>
+      </ul>
+    </div>
+
+    <div class="service-card fade-in">
+      <div class="service-number">03</div>
+      <div class="service-icon-wrap">🚢</div>
+      <div class="service-name">Distribution</div>
+      <p class="service-desc">From port to final destination, we handle international freight, warehousing, and last-mile logistics with precision and full chain visibility.</p>
+      <ul class="service-features">
+        <li>Sea, air & road freight forwarding</li>
+        <li>Bonded warehousing solutions</li>
+        <li>Customs clearance & brokerage</li>
+        <li>Real-time shipment tracking</li>
+        <li>Cold-chain & specialist handling</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="process-strip fade-in">
+    <div class="process-step">
+      <div class="process-dot">01</div>
+      <div class="process-label">Enquiry &<br>Briefing</div>
+    </div>
+    <div class="process-step">
+      <div class="process-dot">02</div>
+      <div class="process-label">Sourcing &<br>Pricing</div>
+    </div>
+    <div class="process-step">
+      <div class="process-dot">03</div>
+      <div class="process-label">Contract &<br>Payment</div>
+    </div>
+    <div class="process-step">
+      <div class="process-dot">04</div>
+      <div class="process-label">Shipping &<br>Customs</div>
+    </div>
+    <div class="process-step">
+      <div class="process-dot">05</div>
+      <div class="process-label">Delivery &<br>Confirmation</div>
+    </div>
+  </div>
+</section>
+
+<!-- ========================
+     PAGE 4 — CONTACT
+======================== -->
+<section class="page" id="contact" style="min-height: auto;">
+  <div class="contact-grid">
+    <div class="contact-info fade-in">
+      <div class="section-tag">Get In Touch</div>
+      <h2 class="contact-title">LET'S DO<br><span class="accent">BUSINESS</span><br>TOGETHER.</h2>
+      <p class="contact-desc">Whether you're looking to source products, find buyers for your inventory, or need a reliable distribution partner — we want to hear from you.</p>
+
+      <div class="contact-detail">
+        <div class="contact-detail-icon">✉</div>
+        <div>
+          <div class="contact-detail-label">Email</div>
+          <div class="contact-detail-value">trade@nexustrade.com</div>
+        </div>
+      </div>
+
+      <div class="contact-detail">
+        <div class="contact-detail-icon">📞</div>
+        <div>
+          <div class="contact-detail-label">Phone</div>
+          <div class="contact-detail-value">+44 791 669 7126</div>
+        </div>
+      </div>
+
+      <div class="contact-detail">
+        <div class="contact-detail-icon">🌐</div>
+        <div>
+          <div class="contact-detail-label">Address</div>
+          <div class="contact-detail-value">7 Laburnum Avenue, Shirebrook, Mansfield, England, NG20 8LE</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="contact-form fade-in" id="contact-form-wrap">
+      <div id="form-inner">
+        <div class="form-row">
+          <div class="form-group">
+            <label>First Name</label>
+            <input type="text" placeholder="John" id="f-first">
+          </div>
+          <div class="form-group">
+            <label>Last Name</label>
+            <input type="text" placeholder="Smith" id="f-last">
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Company</label>
+            <input type="text" placeholder="Your Company Ltd" id="f-company">
+          </div>
+          <div class="form-group">
+            <label>Country</label>
+            <input type="text" placeholder="United Kingdom" id="f-country">
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Email Address</label>
+          <input type="email" placeholder="john@company.com" id="f-email">
+        </div>
+        <div class="form-group">
+          <label>Enquiry Type</label>
+          <select id="f-type">
+            <option value="" disabled selected>Select enquiry type...</option>
+            <option>I want to source / buy products</option>
+            <option>I want to sell products wholesale</option>
+            <option>I need distribution services</option>
+            <option>Partnership & collaboration</option>
+            <option>General enquiry</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Message</label>
+          <textarea placeholder="Tell us about your requirements, products, volumes, target markets..." id="f-msg"></textarea>
+        </div>
+        <button class="form-submit" onclick="submitForm()">Send Enquiry →</button>
+        <p class="form-note">We respond to all enquiries within 1–2 business days.</p>
+      </div>
+
+      <div class="form-success" id="form-success">
+        <div class="success-icon">✦</div>
+        <div class="success-title">ENQUIRY RECEIVED</div>
+        <p class="success-text">Thank you for reaching out. A member of our team will review your enquiry and respond within 1–2 business days.<br><br>We look forward to exploring opportunities with you.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-copy">© 2026 Nexus Trade Global Wholesale Group. All rights reserved.</div>
+  <ul class="footer-links">
+    <li><a href="#home">Home</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</footer>
+
+<script>
+// ─── CURSOR ─────────────────────────────────────────────
+
+//const cursor = document.getElementById('cursor');
+//const ring = document.getElementById('cursorRing');
+//document.addEventListener('mousemove', e => {
+  //cursor.style.left = e.clientX + 'px';
+  //cursor.style.top = e.clientY + 'px';
+  //setTimeout(() => {
+    //ring.style.left = e.clientX + 'px';
+    //ring.style.top = e.clientY + 'px';
+  //}, 60);
+//});
+
+// ─── GLOBE CANVAS ───────────────────────────────────────
+const canvas = document.getElementById('globe-canvas');
+const ctx = canvas.getContext('2d');
+let W, H, animFrame;
+
+function resizeGlobe() {
+  const size = Math.min(window.innerWidth * 0.65, window.innerHeight * 1.1);
+  canvas.width = size;
+  canvas.height = size;
+  W = H = size;
+}
+
+resizeGlobe();
+window.addEventListener('resize', resizeGlobe);
+
+const R = () => W / 2;
+let t = 0;
+
+// Major trade city coords [lat, lon]
+const cities = [
+  [51.5, -0.1],   // London
+  [40.7, -74.0],  // New York
+  [35.7, 139.7],  // Tokyo
+  [31.2, 121.5],  // Shanghai
+  [1.3, 103.8],   // Singapore
+  [25.2, 55.3],   // Dubai
+  [48.9, 2.3],    // Paris
+  [52.5, 13.4],   // Berlin
+  [-33.9, 151.2], // Sydney
+  [19.4, -99.1],  // Mexico City
+  [55.8, 37.6],   // Moscow
+  [23.1, 113.3],  // Guangzhou
+  [13.1, 80.3],   // Chennai
+  [-23.5, -46.6], // Sao Paulo
+  [6.5, 3.4],     // Lagos
+];
+
+function latLonToXY(lat, lon, rotation, cx, cy, r) {
+  const phi = (90 - lat) * Math.PI / 180;
+  const theta = (lon + rotation) * Math.PI / 180;
+  const x = cx + r * Math.sin(phi) * Math.cos(theta);
+  const y = cy + r * Math.cos(phi);
+  const z = Math.sin(phi) * Math.sin(theta);
+  return { x, y, z };
+}
+
+// Trade routes between cities
+const routes = [
+  [0, 1], [0, 3], [0, 5], [1, 4], [1, 9], [2, 3], [2, 7], [3, 5],
+  [4, 5], [4, 8], [5, 11], [6, 7], [7, 0], [10, 0], [11, 4], [12, 5],
+  [13, 9], [14, 5], [1, 6], [2, 4],
+];
+
+function drawGlobe(rotation) {
+  ctx.clearRect(0, 0, W, H);
+  const cx = W / 2, cy = H / 2, r = W * 0.44;
+
+  // Outer glow
+  const radGrad = ctx.createRadialGradient(cx, cy, r * 0.3, cx, cy, r * 1.1);
+  radGrad.addColorStop(0, 'rgba(0, 212, 255, 0.03)');
+  radGrad.addColorStop(0.7, 'rgba(201, 168, 76, 0.04)');
+  radGrad.addColorStop(1, 'transparent');
+  ctx.fillStyle = radGrad;
+  ctx.beginPath();
+  ctx.arc(cx, cy, r * 1.1, 0, Math.PI * 2);
+  ctx.fill();
+
+  // Globe sphere gradient
+  const sphGrad = ctx.createRadialGradient(cx - r * 0.2, cy - r * 0.2, 0, cx, cy, r);
+  sphGrad.addColorStop(0, 'rgba(15, 32, 64, 0.7)');
+  sphGrad.addColorStop(1, 'rgba(5, 13, 26, 0.9)');
+  ctx.beginPath();
+  ctx.arc(cx, cy, r, 0, Math.PI * 2);
+  ctx.fillStyle = sphGrad;
+  ctx.fill();
+
+  // Lat/lon grid lines
+  ctx.strokeStyle = 'rgba(0, 212, 255, 0.06)';
+  ctx.lineWidth = 0.8;
+  for (let lat = -80; lat <= 80; lat += 20) {
+    const phi = (90 - lat) * Math.PI / 180;
+    const ry = r * Math.cos(phi);
+    const posY = cy + r * Math.cos(phi);
+    const rx = r * Math.sin(phi);
+    if (rx > 0) {
+      ctx.beginPath();
+      ctx.ellipse(cx, posY, rx, Math.abs(ry * 0.12), 0, 0, Math.PI * 2);
+      ctx.stroke();
+    }
+  }
+  for (let lon = 0; lon < 360; lon += 30) {
+    const theta = (lon + rotation) * Math.PI / 180;
+    ctx.beginPath();
+    for (let la = -90; la <= 90; la += 2) {
+      const phi = (90 - la) * Math.PI / 180;
+      const x = cx + r * Math.sin(phi) * Math.cos(theta);
+      const y = cy + r * Math.cos(phi);
+      const z = Math.sin(phi) * Math.sin(theta);
+      if (la === -90) ctx.moveTo(x, y);
+      else if (z > 0) ctx.lineTo(x, y);
+    }
+    ctx.strokeStyle = 'rgba(0, 212, 255, 0.05)';
+    ctx.stroke();
+  }
+
+  // Globe border
+  const borderGrad = ctx.createLinearGradient(cx - r, cy, cx + r, cy);
+  borderGrad.addColorStop(0, 'rgba(201,168,76,0.1)');
+  borderGrad.addColorStop(0.5, 'rgba(0,212,255,0.3)');
+  borderGrad.addColorStop(1, 'rgba(201,168,76,0.1)');
+  ctx.beginPath();
+  ctx.arc(cx, cy, r, 0, Math.PI * 2);
+  ctx.strokeStyle = borderGrad;
+  ctx.lineWidth = 1.5;
+  ctx.stroke();
+
+  // Compute city positions
+  const cityPos = cities.map(([lat, lon]) => latLonToXY(lat, lon, rotation, cx, cy, r));
+
+  // Draw animated trade routes
+  routes.forEach(([a, b], i) => {
+    const p1 = cityPos[a], p2 = cityPos[b];
+    if (p1.z < -0.1 || p2.z < -0.1) return; // behind globe
+
+    const progress = ((t * 0.4 + i * 37) % 100) / 100;
+    const arcH = -r * 0.25;
+    const mx = (p1.x + p2.x) / 2 - arcH * (p2.y - p1.y) / r;
+    const my = (p1.y + p2.y) / 2 + arcH * (p2.x - p1.x) / r;
+
+    // Static dim route
+    ctx.beginPath();
+    ctx.moveTo(p1.x, p1.y);
+    ctx.quadraticCurveTo(mx, my, p2.x, p2.y);
+    ctx.strokeStyle = 'rgba(201, 168, 76, 0.12)';
+    ctx.lineWidth = 0.8;
+    ctx.stroke();
+
+    // Animated packet
+    const bx = (1 - progress) * (1 - progress) * p1.x + 2 * (1 - progress) * progress * mx + progress * progress * p2.x;
+    const by = (1 - progress) * (1 - progress) * p1.y + 2 * (1 - progress) * progress * my + progress * progress * p2.y;
+
+    const grd = ctx.createRadialGradient(bx, by, 0, bx, by, 6);
+    grd.addColorStop(0, 'rgba(201,168,76,0.9)');
+    grd.addColorStop(1, 'transparent');
+    ctx.beginPath();
+    ctx.arc(bx, by, 6, 0, Math.PI * 2);
+    ctx.fillStyle = grd;
+    ctx.fill();
+  });
+
+  // Draw city dots
+  cityPos.forEach((pos, i) => {
+    if (pos.z < 0) return;
+    const brightness = 0.4 + pos.z * 0.6;
+    const grd = ctx.createRadialGradient(pos.x, pos.y, 0, pos.x, pos.y, 12);
+    grd.addColorStop(0, `rgba(0, 212, 255, ${brightness * 0.9})`);
+    grd.addColorStop(0.4, `rgba(0, 212, 255, ${brightness * 0.3})`);
+    grd.addColorStop(1, 'transparent');
+    ctx.beginPath();
+    ctx.arc(pos.x, pos.y, 12, 0, Math.PI * 2);
+    ctx.fillStyle = grd;
+    ctx.fill();
+    ctx.beginPath();
+    ctx.arc(pos.x, pos.y, 2.5, 0, Math.PI * 2);
+    ctx.fillStyle = `rgba(200, 220, 255, ${brightness})`;
+    ctx.fill();
+  });
+}
+
+let rotation = 60;
+function animate() {
+  rotation += 0.08;
+  t += 0.5;
+  drawGlobe(rotation);
+  animFrame = requestAnimationFrame(animate);
+}
+animate();
+
+// ─── ABOUT CANVAS ───────────────────────────────────────
+const ac = document.getElementById('about-canvas');
+const actx = ac.getContext('2d');
+function drawAboutViz() {
+  ac.width = ac.offsetWidth;
+  ac.height = ac.offsetHeight;
+  const w = ac.width, h = ac.height;
+
+  // Dark bg
+  actx.fillStyle = '#0A1628';
+  actx.fillRect(0, 0, w, h);
+
+  // Node network viz
+  const nodes = Array.from({ length: 22 }, (_, i) => ({
+    x: 40 + Math.random() * (w - 80),
+    y: 40 + Math.random() * (h - 80),
+    r: 2 + Math.random() * 5,
+    type: i < 5 ? 'hub' : 'node',
+  }));
+
+  // Draw connections
+  nodes.forEach((n, i) => {
+    nodes.forEach((m, j) => {
+      if (j <= i) return;
+      const d = Math.hypot(n.x - m.x, n.y - m.y);
+      if (d < 180) {
+        actx.beginPath();
+        actx.moveTo(n.x, n.y);
+        actx.lineTo(m.x, m.y);
+        actx.strokeStyle = `rgba(201, 168, 76, ${0.06 + (1 - d / 180) * 0.12})`;
+        actx.lineWidth = 0.7;
+        actx.stroke();
+      }
+    });
+  });
+
+  // Draw nodes
+  nodes.forEach(n => {
+    if (n.type === 'hub') {
+      const g = actx.createRadialGradient(n.x, n.y, 0, n.x, n.y, n.r * 5);
+      g.addColorStop(0, 'rgba(201,168,76,0.6)');
+      g.addColorStop(1, 'transparent');
+      actx.beginPath();
+      actx.arc(n.x, n.y, n.r * 5, 0, Math.PI * 2);
+      actx.fillStyle = g;
+      actx.fill();
+
+      actx.beginPath();
+      actx.arc(n.x, n.y, n.r, 0, Math.PI * 2);
+      actx.fillStyle = 'rgba(201,168,76,0.9)';
+      actx.fill();
+    } else {
+      actx.beginPath();
+      actx.arc(n.x, n.y, n.r, 0, Math.PI * 2);
+      actx.fillStyle = 'rgba(0, 212, 255, 0.4)';
+      actx.fill();
+    }
+  });
+
+  // Overlay gradient
+  const og = actx.createLinearGradient(0, 0, 0, h);
+  og.addColorStop(0, 'rgba(10, 22, 40, 0.2)');
+  og.addColorStop(1, 'rgba(10, 22, 40, 0.5)');
+  actx.fillStyle = og;
+  actx.fillRect(0, 0, w, h);
+}
+drawAboutViz();
+
+// ─── SCROLL FADE-IN ─────────────────────────────────────
+const fadeEls = document.querySelectorAll('.fade-in');
+const obs = new IntersectionObserver(entries => {
+  entries.forEach((e, i) => {
+    if (e.isIntersecting) {
+      setTimeout(() => e.target.classList.add('visible'), 80);
+      obs.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.1 });
+fadeEls.forEach(el => obs.observe(el));
+
+// ─── FORM ───────────────────────────────────────────────
+function submitForm() {
+  const fields = ['f-first', 'f-last', 'f-email', 'f-type', 'f-msg'];
+  const empty = fields.filter(id => !document.getElementById(id).value.trim());
+  if (empty.length) {
+    empty.forEach(id => {
+      const el = document.getElementById(id);
+      el.style.borderColor = '#C9A84C';
+      setTimeout(() => el.style.borderColor = '', 2000);
+    });
+    return;
+  }
+  document.getElementById('form-inner').style.display = 'none';
+  document.getElementById('form-success').classList.add('show');
+}
+</script>
+</body>
+</html>
